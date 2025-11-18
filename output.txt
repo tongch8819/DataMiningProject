@@ -1,0 +1,58 @@
+--- Step 1: Loading Data from Local CSV ---
+Loaded successfully with semi-colon delimiter.
+Dataset loaded. Total records: 10000
+Columns found: ['id', 'category', 'title', 'body', 'amenities', 'bathrooms', 'bedrooms', 'currency', 'fee', 'has_photo', 'pets_allowed', 'price', 'price_display', 'price_type', 'square_feet', 'address', 'cityname', 'state', 'latitude', 'longitude', 'source', 'time']
+
+--- Step 2: Preparing & Discretizing Data ---
+Data discretization complete.
+   price    Price_Bin  square_feet    Size_Bin
+0    790     Rent_Low          101  Size_Small
+1    425     Rent_Low          106  Size_Small
+2   1390  Rent_Medium          107  Size_Small
+3    925     Rent_Low          116  Size_Small
+4    880     Rent_Low          125  Size_Small
+
+
+--- Step 3: Converting to Transactions ---
+Created 10000 transactions.
+Sample Transaction 0: ['Rent_Low', 'Size_Small', '0.0_Beds', 'nan_Baths', 'DC']
+
+
+--- Step 4: Running Apriori Algorithm ---
+Total distinct items found: 111
+Found 995 frequent itemsets.
+
+--- Step 5: Top 10 Association Rules ---
+                                      antecedents  ...      lift
+440                (Size_Small, Garbage Disposal)  ...  1.506251
+1898   (1.0_Beds, Size_Small, Cable or Satellite)  ...  1.506251
+2003             (1.0_Beds, Rent_Low, Dishwasher)  ...  1.506251
+2035           (1.0_Beds, Size_Small, Dishwasher)  ...  1.506251
+2221              (1.0_Beds, Parking, Size_Small)  ...  1.506251
+2299           (1.0_Beds, Patio/Deck, Size_Small)  ...  1.506251
+2365                 (1.0_Beds, Size_Small, Pool)  ...  1.506251
+6266    (1.0_Beds, Parking, Rent_Low, Dishwasher)  ...  1.506251
+6296  (1.0_Beds, Parking, Size_Small, Dishwasher)  ...  1.506251
+6416     (1.0_Beds, Size_Small, Pool, Dishwasher)  ...  1.506251
+
+[10 rows x 5 columns]
+
+--- Specific Insight: What leads to 'Rent_High'? ---
+                            antecedents  consequents  ...  confidence      lift
+49                                 (CA)  (Rent_High)  ...    0.871204  2.613874
+182                        (Size_Large)  (Rent_High)  ...    0.540054  1.620324
+1704              (Size_Large, Parking)  (Rent_High)  ...    0.537487  1.612622
+4535  (2.0_Beds, 2.0_Baths, Size_Large)  (Rent_High)  ...    0.523979  1.572093
+1015             (Size_Large, 3.0_Beds)  (Rent_High)  ...    0.510638  1.532068
+
+[5 rows x 5 columns]
+
+--- Specific Insight: What leads to 'Rent_Low'? ---
+                      antecedents            consequents  ...  confidence      lift
+3962  (TX, 1.0_Baths, Size_Small)             (Rent_Low)  ...    0.641143  1.923044
+1807             (TX, Size_Small)             (Rent_Low)  ...    0.639773  1.918934
+3967             (TX, Size_Small)  (1.0_Baths, Rent_Low)  ...    0.637500  2.188465
+2458    (TX, 1.0_Beds, 1.0_Baths)             (Rent_Low)  ...    0.584769  1.753956
+884                (TX, 1.0_Beds)             (Rent_Low)  ...    0.584381  1.752791
+
+[5 rows x 5 columns]
